@@ -1,0 +1,17 @@
+.hero {
+  display: grid; gap: var(--space-4);
+  padding: var(--space-6) 0 var(--space-5);
+}
+.title {
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.1; margin: 0;
+  letter-spacing: .3px;
+}
+.subtitle { color: var(--muted); max-width: 60ch; }
+.cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.grid {
+  margin-top: var(--space-6);
+  display: grid; gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+.note { color: var(--muted); margin-top: var(--space-3); }

@@ -82,3 +82,57 @@ Thumbs.db
 
 # --- Misc logs ---
 *.log
+
+# dependencies
+node_modules/
+.pnpm-store/
+jspm_packages/
+
+# build
+dist/
+dist-ssr/
+build/
+.cache/
+.temp/
+
+# Vite
+vite.config.ts.timestamp*
+vite.config.js.timestamp*
+
+# local env files
+.env
+.env.local
+.env.*.local
+
+# testing
+coverage/
+*.lcov
+
+# IDEs and editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+
+# OS junk
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# lockfiles (optional if you only use one)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# misc
+*.tgz
