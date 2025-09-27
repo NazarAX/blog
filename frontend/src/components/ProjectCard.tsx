@@ -12,14 +12,31 @@ export type Project = {
 export default function ProjectCard({ project }: { project: Project }) {
   return (
     <article className={styles.card}>
-      <h3 className={styles.title}>{project.title}</h3>
+      <header className={styles.header}>
+        <h3 className={styles.title}>{project.title}</h3>
+      </header>
+
       <p className={styles.desc}>{project.description}</p>
-      <div className={styles.meta}>
-        {project.tags.map(t => <span className={styles.tag} key={t}>{t}</span>)}
-      </div>
+
+      {project.tags?.length > 0 && (
+        <ul className={styles.meta} aria-label="Tags">
+          {project.tags.map(t => (
+            <li className={styles.tag} key={t}>{t}</li>
+          ))}
+        </ul>
+      )}
+
       <div className={styles.actions}>
-        {project.repo && <a className={styles.link} href={project.repo} target="_blank" rel="noreferrer">Code</a>}
-        {project.demo && <a className={styles.link} href={project.demo} target="_blank" rel="noreferrer">Demo</a>}
+        {project.repo && (
+          <a className={`${styles.btn} ${styles.btnGhost}`} href={project.repo} target="_blank" rel="noreferrer">
+            Code
+          </a>
+        )}
+        {project.demo && (
+          <a className={`${styles.btn} ${styles.btnPrimary}`} href={project.demo} target="_blank" rel="noreferrer">
+            Demo
+          </a>
+        )}
       </div>
     </article>
   );

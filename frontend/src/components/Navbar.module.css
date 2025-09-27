@@ -1,0 +1,37 @@
+.nav {
+  background: linear-gradient(180deg, rgba(15,21,32,0.9), rgba(15,21,32,0.75));
+  backdrop-filter: blur(8px) saturate(110%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100; /* stays above background effects */
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.menu a {
+  color: var(--text, #e6f5ec);
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+
+.menu a:hover {
+  color: var(--brand, #5effa8);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-1px);
+}
+
+.active {
+  color: var(--brand-2, #00ffd1);
+  font-weight: 600;
+  border-bottom: 2px solid var(--brand-2, #00ffd1);
+}

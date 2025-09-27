@@ -14,11 +14,44 @@
   z-index: 2; /* text/UI always above effects */
 }
 
+#root {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .main {
   position: relative;
   z-index: 2;
   padding: var(--space-6, 1.5rem) 0 var(--space-5, 1.25rem);
+  flex: 1;
 }
+
+.shell {
+  min-height: 100%;
+  min-height: 100dvh;  /* handles mobile address bars nicely */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.main {
+  flex: 1;  /* pushes footer down */
+  position: relative;
+  z-index: 2;
+  padding: var(--space-6, 1.5rem) 0 var(--space-5, 1.25rem);
+}
+
+:global(nav), :global(footer) {
+  position: relative;
+  z-index: 3;
+}
+
+:global(footer) {
+  margin-top: auto; /* ensures footer sticks at bottom */
+}
+
+
 
 /* ===== base grid overlay ===== */
 .shell::before {
@@ -51,7 +84,7 @@
   z-index: 1; /* same as grid, still behind text */
   pointer-events: none;
 
-  --highlight: rgba(110, 255, 170, 0.25); /* dimmer neon */
+  --highlight: rgba(110, 255, 255, 0.156); /* dimmer neon */
   --speed: 9s;
 
   background-image:
@@ -74,7 +107,7 @@
   animation: sweepHighlight var(--speed) ease-in-out infinite;
 
   mix-blend-mode: screen; /* glow effect */
-  opacity: 0.6; /* extra dim */
+  opacity: 0.325; /* extra dim */
 }
 
 @keyframes sweepHighlight {

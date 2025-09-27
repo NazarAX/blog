@@ -1,11 +1,22 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   return (
-    <nav style={{ padding: "1rem", background: "#282c34", color: "white" }}>
-      <Link to="/" style={{ marginRight: "1rem", color: "white" }}>Home</Link>
-      <Link to="/about" style={{ marginRight: "1rem", color: "white" }}>About</Link>
-      <Link to="/projects" style={{ color: "white" }}>Dashboard</Link>
+    <nav className={styles.nav}>
+      <div className="container">
+        <div className={styles.menu}>
+          <NavLink to="/" className={({ isActive }) => isActive ? styles.active : ""}>
+            Home
+          </NavLink>
+          <NavLink to="/about" className={({ isActive }) => isActive ? styles.active : ""}>
+            About Me
+          </NavLink>
+          <NavLink to="/projects" className={({ isActive }) => isActive ? styles.active : ""}>
+            Projects
+          </NavLink>
+        </div>
+      </div>
     </nav>
   );
 }

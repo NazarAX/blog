@@ -1,37 +1,68 @@
 :root {
-  --bg: #06090f;
-  --bg-elev: #0a0f18;
-  --panel: #0d1522;
-  --panel-2: #0a111d;
-  --text: #e6f5ec;
-  --muted: #86a497;
+  /* Core background + surfaces (slightly brighter steps for readability) */
+  --bg:        #0f1520;   /* page background (navy/ink) */
+  --bg-elev:   #141c28;   /* base elevated surface */
+  --panel:     #182233;   /* main panels/cards */
+  --panel-2:   #1d2940;   /* deeper panels/sidebars */
+  --border:    #263349;   /* subtle borders/dividers */
 
-  --brand: #5effa8;    /* neon green */
-  --brand-2: #00ffd1;  /* teal accent */
+  /* Text (tuned for contrast & comfort) */
+  --text:      #e9f1f0;   /* primary text */
+  --text-2:    #c8d3d0;   /* secondary text */
+  --muted:     #94a8a1;   /* captions/tertiary */
 
-  --ok: #80ffb3;
-  --warn: #ffe37a;
-  --err: #ff6f91;
+  /* Brand (softened neon to reduce bloom) */
+  --brand:     #52eaa0;   /* primary accent (softer than #5effa8) */
+  --brand-2:   #27dcc1;   /* teal accent */
+  --brand-ink: #0c2a24;   /* subtle brand-tinted bg for tags/badges */
 
-  --radius-lg: 18px;
-  --radius: 12px;
+  /* Semantic */
+  --ok:        #54e39b;
+  --warn:      #ffd363;
+  --err:       #ff6f91;
+
+  /* Shadows / radii / spacing */
+  --radius-lg: 16px;
+  --radius:    12px;
   --radius-sm: 8px;
-  --ring: 0 0 0 1px color-mix(in srgb, var(--brand), transparent 60%);
-  --shadow-1: 0 12px 40px rgba(0,0,0,.5);
-  --shadow-2: 0 24px 70px rgba(0,0,0,.65);
+
+  --shadow-1:  0 8px 24px rgba(0,0,0,.35);
+  --shadow-2:  0 16px 48px rgba(0,0,0,.45);
 
   --space-1: 6px;
   --space-2: 10px;
   --space-3: 16px;
   --space-4: 24px;
-  --space-5: 36px;
-  --space-6: 56px;
-  --space-7: 84px;
+  --space-5: 32px;  /* slightly tighter than 36 for rhythm */
+  --space-6: 48px;  /* bring sections closer */
+  --space-7: 72px;
 
-  --font-ui: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-             Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  /* Typography */
+  --font-ui:   "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 
-  --glass: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
-  --gridline: rgba(94, 255, 168, 0.06);
+  --font-size-1: 12.5px;  /* micro */
+  --font-size-2: 14px;    /* small */
+  --font-size-3: 16px;    /* body */
+  --font-size-4: 18px;    /* lead */
+  --font-size-5: 22px;    /* h4 */
+  --font-size-6: 28px;    /* h3 */
+  --font-size-7: 36px;    /* h2 */
+  --font-size-8: 44px;    /* h1 */
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.55;  /* more open for readability */
+  --leading-loose: 1.8;
+
+  /* Focus ring (highly visible but not blinding) */
+  --ring: 0 0 0 2px color-mix(in srgb, var(--brand), transparent 40%),
+          0 0 0 4px color-mix(in srgb, var(--brand-2), transparent 70%);
+
+  /* Subtle glass & grid */
+  --glass: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+  --gridline: rgba(82, 234, 160, 0.05);
+
+  /* Fog color = page bg so R3F blends into page */
+  --fog: #0f1520;
 }

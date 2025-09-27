@@ -1,29 +1,173 @@
 @import "./tokens.css";
 
+/* ---------- Base reset ---------- */
 * { box-sizing: border-box; }
-html, body, #root { height: 100%; }
+html, body, #root { height: 100%; }           /* sticky-footer friendly */
 html, body {
   margin: 0;
   padding: 0;
+}
+
+/* ---------- Typography & base ---------- */
+body {
   background: var(--bg);
   color: var(--text);
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: var(--font-ui);
+  font-size: var(--font-size-3);
+  line-height: var(--leading-normal);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--brand); text-decoration: none; }
-a:hover { text-decoration: underline; }
+/* Headings */
+h1, h2, h3, h4 {
+  margin: 0 0 var(--space-3);
+  line-height: var(--leading-tight);
+  color: var(--text);
+  font-weight: 700;
+}
+h1 { font-size: var(--font-size-8); letter-spacing: -0.01em; }
+h2 { font-size: var(--font-size-7); }
+h3 { font-size: var(--font-size-6); }
+h4 { font-size: var(--font-size-5); }
 
+/* Copy */
+p, li {
+  margin: 0 0 var(--space-3);
+  color: var(--text-2);
+}
+strong { color: var(--text); }
+
+/* ---------- Links ---------- */
+a {
+  color: var(--brand-2);
+  text-decoration: none;
+  transition: color .15s ease, background-color .15s ease;
+}
+a:hover { color: var(--brand); text-decoration: underline; }
+a:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: 6px;
+}
+
+/* ---------- Layout container ---------- */
 .container {
-  width: min(1100px, 90vw);
+  width: min(1100px, 92vw);
   margin: 0 auto;
+  padding: 0 var(--space-4);
 }
 
-button {
-  border: 0; border-radius: var(--radius-sm);
-  padding: 10px 16px;
-  background: linear-gradient(135deg, var(--brand), var(--brand-2));
-  color: white; font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--shadow);
+/* ---------- Forms / inputs ---------- */
+input, select, textarea {
+  width: 100%;
+  background: var(--bg-elev);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-family: var(--font-ui);
+  font-size: var(--font-size-3);
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
 }
-button:hover { filter: brightness(1.05); }
+input::placeholder, textarea::placeholder { color: var(--muted); }
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: none;
+  border-color: var(--brand-2);
+  box-shadow: var(--ring);
+}
+
+/* ---------- Global buttons (utility classes) ---------- */
+/* Use on <a>, <button>, or <Link> */
+.btn {
+  --h: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--h);
+  padding: 0 16px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font: 600 1rem/1 var(--font-ui);
+  letter-spacing: .2px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .12s ease, filter .18s ease, box-shadow .18s ease,
+              background-color .18s ease, border-color .18s ease, color .18s ease;
+  will-change: transform, filter, box-shadow;
+}
+.btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--brand) 30%, transparent),
+    0 0 0 5px color-mix(in srgb, var(--brand-2) 20%, transparent);
+}
+.btn[aria-disabled="true"], .btn:disabled {
+  opacity: .55; cursor: not-allowed; transform: none; filter: none;
+}
+
+/* Primary CTA */
+.btnPrimary {
+  color: #07110f;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--brand) 88%, white 12%),
+    color-mix(in srgb, var(--brand-2) 88%, white 12%)
+  );
+  border-color: color-mix(in srgb, var(--brand) 42%, transparent);
+  box-shadow: 0 6px 16px rgba(0,0,0,.35), inset 0 1px rgba(255,255,255,.12);
+}
+.btnPrimary:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.btnPrimary:active { transform: translateY(0) scale(.98); filter: brightness(.97); }
+
+/* Ghost / Secondary */
+.btnGhost {
+  color: var(--text);
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border-color: color-mix(in srgb, var(--brand-2) 28%, rgba(255,255,255,.12));
+  box-shadow: inset 0 1px rgba(255,255,255,.06), 0 4px 12px rgba(0,0,0,.25);
+}
+.btnGhost:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+}
+
+/* Quiet text-style button */
+.btnText {
+  background: none;
+  border: none;
+  color: var(--brand-2);
+  padding: 0;
+}
+.btnText:hover { color: var(--brand); text-decoration: underline; }
+
+/* Small variant */
+.btnSm { --h: 36px; padding: 0 12px; font-size: .92rem; border-radius: var(--radius-sm); }
+
+/* ---------- Accessibility helpers ---------- */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; border: 0; padding: 0;
+  white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;
+}
+
+a:not(.btn):hover {
+  color: var(--brand);
+  text-decoration: underline;
+}
+
+/* Make sure button-links never get underlined by the global rule */
+a.btn { text-decoration: none; }
+
+/* Lock readable text color for the primary button even on hover/active */
+.btnPrimary,
+.btnPrimary:hover,
+.btnPrimary:active {
+  color: #07110f; /* dark ink for contrast on bright fill */
+}
+
+/* ---------- Motion preferences ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

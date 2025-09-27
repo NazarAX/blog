@@ -39,7 +39,7 @@ function makeGlyphTexture(char: string, color = "rgba(110,255,170,1)") {
 function HexSprites({
   density = 0.9,
   speed = 1.0,
-  color = "rgba(110,255,170,0.95)",
+  color = "rgba(41, 169, 95, 0.95)",
   count = 400,
   flipMin = 2.0,
   flipMax = 6.0,
@@ -67,6 +67,7 @@ function HexSprites({
         blending: THREE.AdditiveBlending,
         opacity: 0.9,
       });
+      
       const s = new THREE.Sprite(mat);
       s.position.set(
         (Math.random() - 0.5) * spread,
@@ -164,22 +165,23 @@ export default function HexRain3D({
       }}
       aria-hidden
     >
-      <Canvas
-        gl={{ antialias: true, alpha: true }}
-        dpr={[1, 2]}
-        camera={{ fov: 60, position: [0, 0, 9] }}
-      >
-        <fog attach="fog" args={["#000000", 8, 28]} />
-        <HexSprites
-          density={density}
-          speed={speed}
-          color={color}
-          count={count}
-          flipMin={flipMin}
-          flipMax={flipMax}
-          spin={spin}
-        />
-      </Canvas>
+     <Canvas
+      style={{ pointerEvents: "none" }}
+      gl={{ antialias: true, alpha: true }}
+      dpr={[1, 2]}
+      camera={{ fov: 60, position: [0, 0, 9] }}
+    >
+      <fog attach="fog" args={["#000000", 5, 20]} />
+      <HexSprites
+        density={density}
+        speed={speed}
+        color={color}
+        count={count}
+        flipMin={flipMin}
+        flipMax={flipMax}
+        spin={spin}
+      />
+    </Canvas>
     </div>
   );
 }
