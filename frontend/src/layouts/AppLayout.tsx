@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import BinaryField3D from "../components/BinaryField3D";
+import BinaryField from "../components/BinaryField";
 import styles from "./AppLayout.module.css";
 
 export default function AppLayout() {
   return (
     <div className={styles.shell}>
       {/* 3D background */}
-      <BinaryField3D count={420} speed={0.7} opacity={0.8} color="rgba(94,255,168,0.95)" />
+      <BinaryField count={420} speed={0.7} opacity={0.8} color="rgba(94,255,168,0.95)" />
 
       {/* Foreground UI */}
       <Navbar />
