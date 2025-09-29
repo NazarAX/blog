@@ -19,17 +19,48 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-mysql'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.hibernate.orm:hibernate-core'
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    runtimeOnly 'com.mysql:mysql-connector-j'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
 
+tasks.register('newMigration') {
+    doLast {
+        def version = new Date().format("yyyyMMddHHmmss")
+        def name = project.findProperty("name") ?: "change"
+        def className = "V${version}__${name.capitalize().replaceAll('[^A-Za-z0-9]', '_')}"
+        def dir = file("src/main/java/db/migrations")
+        dir.mkdirs()
+        def f = new File(dir, "${className}.java")
+        f.text = """package db.migrations;
 
-tasks.named('bootRun') {
-    jvmArgs += ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=127.0.0.1:5005']
+import org.flywaydb.core.api.migration.BaseJavaMigration;
+import org.flywaydb.core.api.migration.Context;
+
+public class ${className} extends BaseJavaMigration {
+    @Override
+    public void migrate(Context ctx) throws Exception {
+        // TODO: implement migration
+    }
+}
+"""
+        println "Created ${f}"
+    }
 }
