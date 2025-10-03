@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form  th:action="@{/admin/login}" method="post">
+    <input type="text" name="username">
+    <input type="text" name="password">
+    <input type="submit">
+
+    <div th:if="${errorMessage}" th:text="${errorMessage}" class="error"></div>
+    <div th:if="${logoutMessage}" th:text="${logoutMessage}" class="info"></div>
+</form>
+</body>
+</html>
