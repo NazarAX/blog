@@ -1,5 +1,6 @@
-package com.nazariitsubera.blog.config.security;
+package com.nazariitsubera.blog.modules.users.services;
 
+import com.nazariitsubera.blog.modules.users.security.SecurityUser;
 import com.nazariitsubera.blog.modules.users.repositories.UserRepository;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;

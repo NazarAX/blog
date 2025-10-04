@@ -1,4 +1,4 @@
-package com.nazariitsubera.blog.config.security;
+package com.nazariitsubera.blog.modules.users.security;
 
 import com.nazariitsubera.blog.modules.users.domain.User;
 import org.springframework.security.core.GrantedAuthority;

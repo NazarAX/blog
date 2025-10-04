@@ -1,4 +1,4 @@
-package com.nazariitsubera.blog.modules.users.web;
+package com.nazariitsubera.blog.modules.users.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
