@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <link rel="stylesheet" th:href="@{/css/globals.css}">
+</head>
+<body>
+<div class="layout">
+    <div th:replace="fragments/sidebar :: admin-sidebar"></div>
+
+    <div class="main">
+        <header class="topbar">
+            <button class="toggle" onclick="document.querySelector('.sidebar').classList.toggle('is-open')">☰</button>
+            <div class="topbar__title">Projects</div>
+            <div class="topbar__spacer"></div>
+            <a th:href="@{/admin/projects/create}" class="btn btn--primary">+ New Project</a>
+        </header>
+
+        <div class="container">
+            <div class="card">
+                <h1 class="card__title">All Projects</h1>
+
+                <div th:if="${#lists.isEmpty(projects)}" class="state-empty">
+                    No projects yet. Create your first one.
+                </div>
+
+                <div class="grid grid--3" th:if="${!#lists.isEmpty(projects)}">
+                    <div class="card" th:each="p : ${projects}">
+                        <div th:if="${p.coverUrl}">
+                            <img th:src="${p.coverUrl}" alt="Cover" class="round"
+                                 style="width:100%;height:160px;object-fit:cover;margin-bottom:var(--space-3);">
+                        </div>
+
+                        <h3 th:text="${p.name}" style="margin:0 0 6px;"></h3>
+                        <p class="text-dim" th:text="${p.description}" style="margin-bottom:var(--space-3);"></p>
+
+                        <div class="text-dim" style="font-size:.8rem;margin-bottom:var(--space-3);">
+                            Slug: <code th:text="${p.slug}">slug</code><br>
+                            Created: <span th:text="${#temporals.format(p.createdAt, 'yyyy-MM-dd')}"></span>
+                        </div>
+
+                        <div class="grid grid--2">
+                            <!-- Use parameterized URL syntax to avoid parsing issues -->
+                            <a th:href="@{/admin/projects/project/{id}(id=${p.id})}" class="btn btn--secondary">View</a>
+                            <a th:href="@{/admin/projects/project/{id}/edit(id=${p.id})}" class="btn btn--primary">Edit</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

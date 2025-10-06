@@ -1,8 +1,8 @@
 package com.nazariitsubera.blog.modules.projects.api;
 
 
-import com.nazariitsubera.blog.modules.projects.api.dto.ProjectDto;
-import com.nazariitsubera.blog.modules.projects.api.dto.ProjectMapper;
+import com.nazariitsubera.blog.modules.projects.dto.ProjectDto;
+import com.nazariitsubera.blog.modules.projects.dto.ProjectMapper;
 import com.nazariitsubera.blog.modules.projects.domain.Project;
 import com.nazariitsubera.blog.modules.projects.services.ProjectService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,16 +16,17 @@ import java.util.List;
 @RequestMapping("/api/projects")
 public class ApiProjectsController {
 
-    @GetMapping("/{slug}")
-    public ProjectDto getOne(@PathVariable String slug, ProjectService projectService) {
-        Project project = projectService.getProjectBySlug(slug);
-        return ProjectMapper.toDto(project);
+    private final ProjectService projectService;
+
+    public ApiProjectsController(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
+
     @GetMapping("/list")
-    public List<ProjectDto> getList(ProjectService projectService) {
+    public List<ProjectDto> getList() {
         return projectService
-                .getAllProjects()
+                .getAll()
                 .stream()
                 .map(ProjectMapper::toDto)
                 .toList();

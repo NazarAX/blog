@@ -1,17 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin Login</title>
+    <link rel="stylesheet" th:href="@{/css/globals.css}">
 </head>
 <body>
-<form  th:action="@{/admin/login}" method="post">
-    <input type="text" name="username">
-    <input type="text" name="password">
-    <input type="submit">
+<!-- Center the card vertically/horizontally using the existing .center utility -->
+<div class="center" style="min-height:100vh; padding: var(--space-5);">
+    <div class="card" style="width:100%; max-width:420px;">
+        <h2 class="card__title" style="text-align:center;">Admin Panel Login</h2>
 
-    <div th:if="${errorMessage}" th:text="${errorMessage}" class="error"></div>
-    <div th:if="${logoutMessage}" th:text="${logoutMessage}" class="info"></div>
-</form>
+        <form th:action="@{/admin/login}" method="post" class="form">
+            <div class="form__row">
+                <label for="username" class="label">Username</label>
+                <input id="username" type="text" name="username" class="input" required autofocus>
+            </div>
+
+            <div class="form__row">
+                <label for="password" class="label">Password</label>
+                <input id="password" type="password" name="password" class="input" required>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--block">Sign In</button>
+
+            <!-- Messages use your alert styles -->
+            <div th:if="${errorMessage}" class="alert alert--err" th:text="${errorMessage}"></div>
+            <div th:if="${logoutMessage}" class="alert alert--info" th:text="${logoutMessage}"></div>
+        </form>
+
+        <div class="text-dim" style="text-align:center; margin-top: var(--space-4); font-size:.85rem;">
+            &copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> Admin Portal
+        </div>
+    </div>
+</div>
 </body>
 </html>

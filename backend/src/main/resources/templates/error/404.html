@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>404 — Page not found</title>
+    <link rel="stylesheet" th:href="@{/css/globals.css}">
+</head>
+<body>
+<div class="center" style="min-height:100vh;padding:var(--space-5);">
+    <div class="card" style="max-width:520px;width:100%;">
+        <h1 class="card__title">404 — Page not found</h1>
+        <p class="text-dim">The page you requested doesn’t exist.</p>
+        <a th:href="@{/admin/index}" class="btn btn--primary mt-3">Go to Admin</a>
+    </div>
+</div>
+</body>
+</html>

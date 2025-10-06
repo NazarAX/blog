@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} ?: 'Admin • Project Form'">Admin • Project Form</title>
+    <link rel="stylesheet" th:href="@{/css/globals.css}">
+    <script src="https://cdn.tiny.cloud/1/tzkrj3eb913ncdxbs8ec06gd4gtrd12nn2lbkcwe05pab1zu/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
+<body>
+<div class="layout">
+    <div th:replace="fragments/sidebar :: admin-sidebar"></div>
+
+    <div class="main">
+        <header class="topbar">
+            <button class="toggle" onclick="document.querySelector('.sidebar').classList.toggle('is-open')">☰</button>
+            <div class="topbar__title" th:text="${pageTitle} ?: 'Project'">Project</div>
+            <div class="topbar__spacer"></div>
+            <a th:href="@{/admin/projects}" class="btn btn--ghost">Cancel</a>
+        </header>
+
+        <div class="container">
+            <div class="card">
+                <h1 class="card__title" th:text="${pageTitle} ?: 'Project'">Project</h1>
+
+                <form class="form" th:object="${project}"
+                      th:action="${project.id} != null ? @{/admin/projects/edit} : @{/admin/projects/create}"
+                      method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <input type="hidden" th:if="${project.id != null}" name="id" th:value="*{id}"/>
+
+                    <div class="form__row">
+                        <label class="label" for="name">Name</label>
+                        <input class="input" id="name" type="text" th:field="*{name}" required>
+                    </div>
+
+                    <div class="form__row">
+                        <label class="label" for="slug">Slug</label>
+                        <input class="input" id="slug" type="text" th:field="*{slug}" required>
+                        <div class="text-dim" style="font-size:.85rem;">Used in URLs, e.g. <code>/projects/&lt;slug&gt;</code></div>
+                    </div>
+
+                    <div class="form__row">
+                        <label class="label" for="description">Short Description</label>
+                        <input class="input" id="description" type="text" th:field="*{description}">
+                    </div>
+
+                    <div class="form__row">
+                        <label class="label" for="html">HTML Content</label>
+                        <textarea class="textarea" id="html" th:field="*{html}" rows="10"></textarea>
+                    </div>
+
+                    <div class="form__row">
+                        <label class="label">Status</label>
+                        <label style="display:flex;align-items:center;gap:10px;">
+                            <input type="checkbox" th:field="*{published}"> Published
+                        </label>
+                    </div>
+
+                    <!-- Optional: cover URL as plain string if you don’t bind Media yet -->
+                    <div class="form__row">
+                        <label class="label" for="coverUrl">Cover URL (optional)</label>
+                        <input class="input" id="coverUrl" type="text" th:field="*{coverUrl}">
+                    </div>
+
+                    <div class="grid grid--3">
+                        <button type="submit" class="btn btn--primary">Save</button>
+                        <a th:href="@{/admin/projects}" class="btn btn--secondary">Back</a>
+                        <a th:if="${project.id != null}" th:href="@{'/admin/projects/project/' + ${project.id}}"
+                           class="btn btn--ghost">View</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        tinymce.init({
+            selector: '#html',
+            height: 500,
+            menubar: false,
+            plugins: 'link image code lists table',
+            toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | code',
+            skin: 'oxide-dark',
+            content_css: 'dark',
+            branding: false
+        });
+    });
+</script>

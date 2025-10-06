@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="admin-sidebar">
+    <aside class="sidebar">
+        <div class="sidebar__header">
+            <h2 class="sidebar__logo">Admin</h2>
+        </div>
+
+        <nav class="sidebar__nav">
+            <a th:href="@{/admin/index}" class="nav__item" th:classappend="${activeMenu == 'dashboard'} ? 'active'">
+                <span class="nav__icon">🏠</span> Dashboard
+            </a>
+            <a th:href="@{/admin/users}" class="nav__item" th:classappend="${activeMenu == 'users'} ? 'active'">
+                <span class="nav__icon">👥</span> Users
+            </a>
+            <a th:href="@{/admin/projects}" class="nav__item" th:classappend="${activeMenu == 'projects'} ? 'active'">
+                <span class="nav__icon">📁</span> Projects
+            </a>
+            <a th:href="@{/admin/settings}" class="nav__item" th:classappend="${activeMenu == 'settings'} ? 'active'">
+                <span class="nav__icon">⚙️</span> Settings
+            </a>
+            <form th:action="@{/admin/logout}" method="post" style="margin:0;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="nav__item logout" style="width:100%; text-align:left;">
+                    <span class="nav__icon">🚪</span> Logout
+                </button>
+            </form>
+        </nav>
+    </aside>
+</div>
+</body>
+</html>

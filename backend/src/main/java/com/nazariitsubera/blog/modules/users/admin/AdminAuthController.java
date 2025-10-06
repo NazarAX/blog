@@ -5,9 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminAuthController
 {
-    @GetMapping("/admin/login")
+    @GetMapping("/login")
     public String loginPage(@RequestParam(value = "error", required = false) String error,
                             Model model) {
         if (error != null) {
@@ -16,7 +17,7 @@ public class AdminAuthController
         return "login";
     }
 
-    @GetMapping("/admin/index")
+    @GetMapping({"/index", "/"})
     public String indexPage() {
         return "index";
     }
