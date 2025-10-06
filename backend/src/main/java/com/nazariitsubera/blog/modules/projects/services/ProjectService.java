@@ -4,6 +4,7 @@ import com.nazariitsubera.blog.modules.projects.domain.Project;
 import com.nazariitsubera.blog.modules.projects.dto.ProjectDto;
 import com.nazariitsubera.blog.modules.projects.dto.ProjectMapper;
 import com.nazariitsubera.blog.modules.projects.repositories.ProjectRepository;
+import io.micrometer.observation.ObservationFilter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,7 +56,6 @@ public class ProjectService
     public void deleteById(Long id) {
         projectRepository.deleteById(id);
     }
-
 
 
 }

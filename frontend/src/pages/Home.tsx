@@ -1,7 +1,5 @@
 import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
-import ProjectCard from "../components/ProjectCard";
-import { featured } from "../lib/projects";
 
 export default function Home() {
   return (
@@ -23,12 +21,6 @@ export default function Home() {
         <p className={styles.note}>
           Currently hacking on distributed storage, physics engines, and React tooling.
         </p>
-      </section>
-
-      <section className="container">
-        <div className={styles.grid}>
-          {featured.map((p) => <ProjectCard key={p.slug} project={p} />)}
-        </div>
       </section>
     </>
   );
