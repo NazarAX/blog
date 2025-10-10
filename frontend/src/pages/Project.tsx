@@ -4,8 +4,23 @@ import { fetchProject } from "../lib/api";
 import type { ProjectDto } from "../lib/types";
 import styles from "./Project.module.css";
 
+function toDateOrUndefined(v: unknown): Date | undefined {
+    if (v === null || v === undefined || v === "") return undefined;
+    if (v instanceof Date) return v;
+    if (typeof v === "string" || typeof v === "number") {
+        const d = new Date(v);
+        return Number.isNaN(d.getTime()) ? undefined : d;
+    }
+    return undefined;
+}
+
+function fmtDate(v: unknown, locale?: string) {
+    const d = toDateOrUndefined(v);
+    return d ? d.toLocaleDateString(locale) : "—";
+}
+
 export default function ProjectPage() {
-    const { slug = "" } = useParams();
+    const { slug = "" } = useParams<{ slug?: string }>();
     const [project, setProject] = useState<ProjectDto | null>(null);
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState<string | null>(null);
@@ -15,7 +30,9 @@ export default function ProjectPage() {
         setErr(null);
         fetchProject(slug)
             .then(setProject)
-            .catch((e) => setErr(e.message || "Failed to load project"))
+            .catch((e: unknown) =>
+                setErr(e instanceof Error ? e.message : "Failed to load project")
+            )
             .finally(() => setLoading(false));
     }, [slug]);
 
@@ -38,8 +55,8 @@ export default function ProjectPage() {
                 )}
 
                 <div className={styles.meta}>
-                    <span>Created: {new Date(project.createdAt).toLocaleDateString()}</span>
-                    <span>Updated: {new Date(project.updatedAt).toLocaleDateString()}</span>
+                    <span>Created: {fmtDate(project.createdAt)}</span>
+                    <span>Updated: {fmtDate(project.updatedAt)}</span>
                     {project.published ? (
                         <span className={styles.badgeOk}>Published</span>
                     ) : (
@@ -60,7 +77,8 @@ export default function ProjectPage() {
 
             <section
                 className={styles.content}
-                dangerouslySetInnerHTML={{ __html: project.html || "" }}
+                // ensure html defaults to empty string when missing
+                dangerouslySetInnerHTML={{ __html: project.html ?? "" }}
             />
         </article>
     );

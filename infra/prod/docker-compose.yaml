@@ -1,0 +1,95 @@
+version: "3.9"
+
+networks:
+  web: {}
+  backend: {}
+
+volumes:
+  mysqldata: {}
+
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-America/Chicago}
+      MYSQL_DATABASE: ${DB_NAME:?set_in_.env}
+      MYSQL_USER: ${DB_USER:?set_in_.env}
+      MYSQL_PASSWORD: ${DB_PASS:?set_in_.env}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS:?set_in_.env}
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+      - --skip-name-resolve
+    volumes:
+      - mysqldata:/var/lib/mysql
+    networks:
+      backend:
+        aliases:
+          - db-prod
+    expose:
+      - "3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "127.0.0.1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  backend:
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-America/Chicago}
+      SPRING_PROFILES_ACTIVE: prod
+      DB_USER: ${DB_USER:?set_in_.env}
+      DB_PASS: ${DB_PASS:?set_in_.env}
+      ADMIN_USER: ${ADMIN_USER:?set_in_.env}
+      ADMIN_PASS: ${ADMIN_PASS:?set_in_.env}
+      # (No SPRING_DATASOURCE_* here—now controlled by application-prod.properties)
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "8080"
+    networks: [backend]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  frontend:
+    build:
+      context: ../../frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - "3000"
+    networks: [backend]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+
+  edge:
+    build:
+      context: ../..
+      dockerfile: infra/prod/nginx/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_started
+      frontend:
+        condition: service_healthy
+    networks:
+      - web
+      - backend
+
